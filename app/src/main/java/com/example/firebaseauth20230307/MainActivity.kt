@@ -10,9 +10,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import com.example.firebaseauth20230307.databinding.ActivityMainBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
@@ -46,6 +47,18 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
+            R.id.action_signout -> {
+                if (Firebase.auth.currentUser != null) {
+                    Firebase.auth.signOut()
+                    Snackbar.make(binding.root, "Signed out", Snackbar.LENGTH_LONG).show()
+                    val navController = findNavController(R.id.nav_host_fragment_content_main)
+                    navController.popBackStack(R.id.FirstFragment, false)
+                    // https://developer.android.com/codelabs/android-navigation#6
+                } else {
+                    Snackbar.make(binding.root, "Cannot sign out", Snackbar.LENGTH_LONG).show()
+                }
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
