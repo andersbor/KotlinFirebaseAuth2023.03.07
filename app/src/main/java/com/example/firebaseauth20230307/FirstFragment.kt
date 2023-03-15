@@ -30,6 +30,11 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /*val currentUser = auth.currentUser
+        if (currentUser != null) {
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }*/
+
         binding.buttonLogin.setOnClickListener {
             val email = binding.edittextEmail.text.trim().toString()
             if (email.isEmpty()) {
